@@ -23,12 +23,12 @@
 ### 4. All the companies that had a Valuation Amount of more than 100.000.000 and have been founded before 2010. Retrieve only the `name` and `ipo` fields.
 
 **`query`**: { $and: [{ founded_year : {$lt: 2010} }, { 'ipo.valuation_amount' : {$gt: 100000000 }}] }
-**`projection`**: { name:1, 'ipo.valuation_amount': 1, _id: 0 }
+**`projection`**: { name:1, ipo: 1, _id: 0 }
 
 ### 5. All the companies that have less than 1000 employees and have been founded before 2005. Order them by the number of employees and limit the search to 10 companies.
 
 **`query`**: {$and: [ { number_of_employees: {$lt: 1000}}, {founded_year: {$lt: 2005}} ] }
-**`sort`**: { number_of_employees: 1}     **`limit`**: 1
+**`sort`**: { number_of_employees: 1}     **`limit`**: 10
 
 ### 6. All the companies that don't include the `partners` field.
 
@@ -63,7 +63,7 @@
 ### 13. All the companies that have been acquired after 2010, order by the acquisition amount, and retrieve only their `name` and `acquisition` field.
 
 **`query`**: {"acquisition.acquired_year": {$gt: 2010}}   **`projection`**: {name: 1, acquisition: 1, _id: 0}
-**`sort`**: {"acquisitions.price_amount": 1}
+**`sort`**: {"acquisition.price_amount": 1}
 
 ### 14. Order the companies by their `founded year`, retrieving only their `name` and `founded year`.
 
@@ -71,7 +71,7 @@
 
 ### 15. All the companies that have been founded on the first seven days of the month, including the seventh. Sort them by their `acquisition price` in a descending order. Limit the search to 10 documents.
 
-**`query`**: {$and: [{founded_day: {$gte: 1}}, {founded_day: {$lte: 7}}]}  **`sort`**: {"acquisitions.price_amount": -1}  **`limit`**: 10
+**`query`**: {founded_day: {$lte: 7}}  **`sort`**: {"acquisition.price_amount": -1}  **`limit`**: 10
 
 ### 16. All the companies on the 'web' `category` that have more than 4000 employees. Sort them by the amount of employees in ascending order.
 
@@ -85,7 +85,7 @@
 
 ### 18. All the companies that have been acquired on the first trimester of the year. Limit the search to 10 companies, and retrieve only their `name` and `acquisition` fields.
 
-**`query`**: {"acquisition.acquired_month": {$lte: 3}}      **`projection`**: {name: 1, acquisition: 1, _id: 0}
+**`query`**: {"acquisition.acquired_month": {$lte: 3}}      **`projection`**: {name: 1, acquisition: 1, _id: 0}    **`limit`**: 10
 
 ### 19. All the companies that have been founded between 2000 and 2010, but have not been acquired before 2011.
 
